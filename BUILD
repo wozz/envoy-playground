@@ -15,6 +15,6 @@ envoy_cc_binary(
 
 sh_test(
     name = "envoy_binary_test",
-    srcs = ["envoy_binary_test.sh"],
+    srcs = ["//scripts:envoy_binary_test.sh"],
     data = [":envoy"],
 )
