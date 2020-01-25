@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: simplexds-service
+spec:
+  selector:
+    app: simplexds_app
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000

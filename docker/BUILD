@@ -1,41 +1,10 @@
-load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_layer")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
-container_layer(
-    name = "entry_script",
-    files = [
-        ":docker-entrypoint.sh",
-    ],
+go_image(
+    name = "echoapp",
+    embed = ["//echoapp:go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
+    visibility = ["//k8s:__pkg__"],
 )
-
-container_layer(
-    name = "envoy_binary",
-    files = [
-        "//:envoy",
-    ],
-    directory = "/usr/local/bin",
-)
-
-container_layer(
-    name = "default_config",
-    files = [
-        ":envoy.yaml",
-    ],
-    directory = "/etc/envoy",
-)
-
-container_image(
-    name = "envoy",
-    base = "@alpine_linux_amd64//image",
-    cmd = ["envoy", "-c", "/etc/envoy/envoy.yaml"],
-    entrypoint = ["/docker-entrypoint.sh"],
-    layers = [
-        ":entry_script",
-        ":envoy_binary",
-        ":default_config",
-    ],
-    ports = [
-        "10000/tcp",
-    ],
-)
-
-

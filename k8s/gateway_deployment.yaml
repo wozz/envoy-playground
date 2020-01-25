@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gw-deployment
+  labels:
+    app: gw_app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gw_app
+  template:
+    metadata:
+      labels:
+        app: gw_app
+    spec:
+      containers:
+      - name: gw
+        image: envoy_image
+        args: ["envoy", "-c", "/etc/envoy/envoy.yaml", "-l", "debug"]
+        ports:
+        - containerPort: 10000
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: gateway-envoy-config

@@ -45,7 +45,6 @@ attrs = {
     ),
     "iso_url": attr.string(
         default = "https://github.com/kubernetes/minikube/releases/download/v1.6.0/minikube-v1.6.0.iso",
-        #default = "https://github.com/f0rmiga/opensuse-minikube-image/releases/download/v0.1.6/minikube-openSUSE.x86_64-0.1.6.iso",
     ),
     "_minikube": attr.label(
         allow_single_file = True,

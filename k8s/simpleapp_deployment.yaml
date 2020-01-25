@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simpleapp-deployment
+  labels:
+    app: simpleapp_app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simpleapp_app
+  template:
+    metadata:
+      labels:
+        app: simpleapp_app
+    spec:
+      containers:
+      - name: envoy-sidecar
+        image: envoy_image
+        args: ["envoy", "-c", "/etc/envoy/envoy.yaml", "-l", "debug"]
+        ports:
+        - containerPort: 9001
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy
+      - name: app
+        image: echoapp
+      volumes:
+        - name: envoy-config
+          configMap:
+            name: simpleapp-envoy-config

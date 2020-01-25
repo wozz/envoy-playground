@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simplexds-deployment
+  labels:
+    app: simplexds_app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simplexds_app
+  template:
+    metadata:
+      labels:
+        app: simplexds_app
+    spec:
+      containers:
+      - name: xds
+        image: simplexds
+        ports:
+        - containerPort: 8000

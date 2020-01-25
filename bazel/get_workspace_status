@@ -1,1 +1,5 @@
-../envoy/bazel/get_workspace_status
+#!/bin/bash
+
+cat <<EOF
+PROJECT ${PROJECT:-notset}
+EOF

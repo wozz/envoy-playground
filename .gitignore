@@ -1,1 +1,3 @@
 bazel-*
+k8s/registry_secret.yaml
+project.bzl
