@@ -1,6 +1,30 @@
 project = struct(
     deployment_name = "envoy-playground",
     namespace = "envoy-playground",
+    envoy = struct(
+        versions = struct(
+            v1_12_2 = {
+                "name": "gcr_envoy_container_v1_12_2",
+                "tag": "v1.12.2",
+                "digest": "sha256:d5e1e43c797542bd71b81b1e62ea96a5575ee7c6d1b773034e805f369d5c3f85",
+            },
+            v1_12_2_1 = {
+                "name": "gcr_envoy_container_v1_12_2_1",
+                "tag": "v1.12.2-1.eds_patch",
+                "digest": "sha256:5f9ecea6157a1aecc2a3506bdd3f7f00293b3907d2e645a198bcb20da4f25554",
+            },
+            v1_13_0 =  {
+                "name": "gcr_envoy_container_v1_13_0",
+                "tag": "v1.13.0",
+                "digest": "sha256:1a56abdb28a135191e9da740f11f866c0b535411adca13f409455084ee4ee44d",
+            },
+            v1_15_0 = {
+                "name": "gcr_envoy_container_v1_15_0",
+                "tag": "v1.15.0",
+                "digest": "sha256:19645c917914b11dba57162110e3898b46c5d644d21c7bf2ff824a34c7de6221",
+            },
+        ),
+    ),
     kubernetes = struct(
         version = "1.15.6",
     ),

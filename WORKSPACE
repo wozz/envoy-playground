@@ -77,31 +77,30 @@ container_pull(
 )
 
 load("//:project.bzl", "PROJECT")
-container_pull(
-    name = "gcr_envoy_container_v1_12_2",
+[container_pull(
+    name = getattr(project.envoy.versions, version)["name"],
     registry = "gcr.io",
     repository = PROJECT + "/envoy",
-    tag = "v1.12.2",
-    digest = "sha256:d5e1e43c797542bd71b81b1e62ea96a5575ee7c6d1b773034e805f369d5c3f85",
-)
-container_pull(
-    name = "gcr_envoy_container_v1_12_2_1",
-    registry = "gcr.io",
-    repository = PROJECT + "/envoy",
-    tag = "v1.12.2-1.eds_patch",
-    digest = "sha256:5f9ecea6157a1aecc2a3506bdd3f7f00293b3907d2e645a198bcb20da4f25554",
-)
-container_pull(
-    name = "gcr_envoy_container_v1_13_0",
-    registry = "gcr.io",
-    repository = PROJECT + "/envoy",
-    tag = "v1.13.0",
-    digest = "sha256:1a56abdb28a135191e9da740f11f866c0b535411adca13f409455084ee4ee44d",
-)
+    tag = getattr(project.envoy.versions, version)["tag"],
+    digest = getattr(project.envoy.versions, version)["digest"],
+) for version in [
+    "v1_12_2",
+    "v1_12_2_1",
+    "v1_13_0",
+    "v1_15_0",
+]]
 
+"""
+http_archive(
+    name = "simplexds",
+    sha256 = "4024736ec6d811218f38227344d4b0ad56577b07f890d054f3558be6273d21c3",
+    strip_prefix = "simplexds-7390ed5e0c8d3bdae1d014234c7a52a4cc715189",
+    urls = ["https://github.com/wozz/simplexds/archive/7390ed5e0c8d3bdae1d014234c7a52a4cc715189.tar.gz"],
+)
+"""
 local_repository(
     name = "simplexds",
-    path = "../simplexds",
+    path = "../simplexds/",
 )
 
 http_archive(
@@ -133,6 +132,6 @@ k8s_go_deps()
 load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_defaults")
 k8s_defaults(
     name = "k8s_deploy",
-    image_chroot = "gcr.io/{PROJECT}/",
+    image_chroot = "gcr.io/" + PROJECT + "/",
     context = "minikube",
 )

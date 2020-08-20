@@ -22,7 +22,7 @@ k8s_deploy(
     template = ":simpleapp_deployment.yaml",
     images = {
         "echoapp": "//docker:echoapp",
-        "envoy_image": "@gcr_envoy_container_v1_12_2_1//image",
+        "envoy_image": "@gcr_envoy_container_v1_15_0//image",
     },
 )
 
@@ -37,7 +37,7 @@ k8s_deploy(
     kind = "deployment",
     template = ":gateway_deployment.yaml",
     images = {
-        "envoy_image": "@gcr_envoy_container_v1_12_2_1//image",
+        "envoy_image": "@gcr_envoy_container_v1_15_0//image",
     },
 )
 
